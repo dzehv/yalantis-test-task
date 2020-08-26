@@ -28,6 +28,12 @@ docker-compose up -d
 
 ## Usage examples
 
+### see app logs
+
+``` bash
+docker logs yalantis-test
+```
+
 ### register new user
 
 ``` bash

@@ -36,16 +36,16 @@ func (account *Account) Validate() (map[string]interface{}, bool) {
 		return u.Message(false, "Password is too short"), false
 	}
 
-	// email should be uniq
-	temp := new(Account)
+	acc := new(Account)
 
 	defer CloseDB()
 	// check duplicates
-	if err := GetDB().Table("accounts").Where("email = ?", account.Email).First(temp).Error; err != nil &&
+	if err := GetDB().Table("accounts").Where("email = ?", account.Email).First(acc).Error; err != nil &&
 		err != gorm.ErrRecordNotFound {
 		return u.Message(false, "Connection error. Please retry! "+err.Error()), false
 	}
-	if temp.Email != "" {
+	if acc.Email != "" {
+		// email/acc should be uniq
 		return u.Message(false, "Email address already in use by another user!"), false
 	}
 
